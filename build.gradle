@@ -1,0 +1,28 @@
+group "de.lalo5"
+version "1.0"
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+sourceSets {
+    main {
+        java.srcDir("./src")
+        resources.srcDir("./resources")
+    }
+}
+
+dependencies {
+    compile files("../GlobalLibs/spigot.jar", "libs/exp4j-0.4.5.jar")
+}
+
+jar {
+    from {
+        project.configurations.compile.collect {
+            zipTree("libs/exp4j-0.4.5.jar")
+        }
+    }
+}
