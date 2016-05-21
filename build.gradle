@@ -2,6 +2,27 @@ group "de.lalo5"
 version "1.0"
 
 apply plugin: 'java'
+apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
+apply plugin: 'release'
+apply plugin: 'github'
+
+github {
+    repo = 'git@github.com:axelrindle/ParticleEffectLib.git'
+    credentials {
+        username = { console.prompt ('Please enter Github username:') }
+        password = { console.prompt ('Please enter Github password:') }
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+        classpath 'me.trnl:github-release-gradle-plugin:0.1'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -17,6 +38,7 @@ sourceSets {
 
 dependencies {
     compile files("../GlobalLibs/spigot.jar", "libs/exp4j-0.4.5.jar")
+    compile 'com.novoda:bintray-release:0.3.4'
 }
 
 jar {
@@ -25,4 +47,37 @@ jar {
             zipTree("libs/exp4j-0.4.5.jar")
         }
     }
+}
+
+publish {
+    userOrg = 'axelrindle'
+    groupId = "$project.group"
+    artifactId = 'particleeffectlib'
+    publishVersion = "$project.version"
+    desc = 'A library for Bukkit/Spigot servers to display all vanilla particle effects and some custom made bigger effects.'
+    website = 'https://github.com/axelrindle/ParticleEffectLib'
+}
+
+release {
+    /* Let's check that everything is committed */
+    doFirst {
+        if (!project.git.status().isEmpty()) {
+            throw new GradleException('You have uncommitted changes.')
+        }
+    }
+
+    /* Ask user for a release version, suggesting some default variant. */
+    version = { console.prompt(' > Please enter release version:', project.version) }
+    tag = { "v$project.release.version" }
+    commitMessage = { "Release $project.version" }
+
+    /* Files and projects that needs to be updated with a new release version. */
+    update {
+        file project.file('build.gradle')
+        projects allprojects
+    }
+
+    /* Tasks that needs to be performed during release. Will be done after tag step. */
+    dependsOn clean
+    dependsOn build
 }
