@@ -4,6 +4,14 @@ A library for Bukkit/Spigot servers to display all vanilla particle effects and 
 It's based on [this post](https://bukkit.org/threads/1-8-particleeffect-v1-7.154406/) and it's dependencies.
 
 ## Include in your project
+First make sure you have this in your `build.gradle` file:
+
+```gradle
+repositories {
+    jcenter()
+}
+```
+
 ### Maven
 ```xml
 <dependency> 
