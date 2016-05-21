@@ -9,8 +9,8 @@ apply plugin: 'github'
 github {
     repo = 'git@github.com:axelrindle/ParticleEffectLib.git'
     credentials {
-        username = { console.prompt ('Please enter Github username:') }
-        password = { console.prompt ('Please enter Github password:') }
+        username = { System.console().readLine ('Please enter Github username:') }
+        password = { System.console().readPassword ('Please enter Github password:') }
     }
 }
 
