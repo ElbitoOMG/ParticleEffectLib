@@ -1,18 +1,9 @@
-group "de.lalo5"
-version "1.2"
+group = "de.lalo5"
+version = "1.2"
 
 apply plugin: 'java'
 apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
 apply plugin: 'release'
-apply plugin: 'github'
-
-github {
-    repo = 'git@github.com:axelrindle/ParticleEffectLib.git'
-    credentials {
-        username = { System.console().readLine ('Please enter Github username:') }
-        password = { System.console().readPassword ('Please enter Github password:') }
-    }
-}
 
 buildscript {
     repositories {
@@ -50,11 +41,24 @@ jar {
 
 publish {
     userOrg = 'axelrindle'
-    groupId = "de.lalo5"
+    groupId = group
     artifactId = 'particleeffectlib'
-    publishVersion = "1.2"
+    publishVersion = version
     desc = 'A library for Bukkit/Spigot servers to display all vanilla particle effects and some custom made bigger effects.'
     website = 'https://github.com/axelrindle/ParticleEffectLib'
+}
+
+apply plugin: 'github'
+
+github {
+    /* Wiki repo will be calculated from this. */
+    repo = 'git@github.com:axelrindle/ParticleEffectLib.git'
+
+    release {
+        /* Use {} brackets for lazy evaluation */
+        tag = { "v$version" }
+        name = { "Release $version" }
+    }
 }
 
 release {
@@ -66,9 +70,9 @@ release {
     }
 
     /* Ask user for a release version, suggesting some default variant. */
-    version = "1.2"
-    tag = { "v1.2" }
-    commitMessage = { "Release v1.2" }
+    version = "$version"
+    tag = { "v$version" }
+    commitMessage = { "Release v$version" }
 
     /* Files and projects that needs to be updated with a new release version. */
     update {
