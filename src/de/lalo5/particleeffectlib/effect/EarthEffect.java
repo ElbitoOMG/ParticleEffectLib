@@ -7,10 +7,11 @@ import de.lalo5.particleeffectlib.util.MathUtils;
 import de.lalo5.particleeffectlib.util.ParticleEffect;
 import de.lalo5.particleeffectlib.util.RandomUtils;
 import de.lalo5.particleeffectlib.util.VectorUtils;
-import java.util.HashSet;
-import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class EarthEffect extends Effect {
 
@@ -123,11 +124,11 @@ public class EarthEffect extends Effect {
             invalidate();
         }
         for (Vector v : cacheGreen) {
-            ParticleEffect.VILLAGER_HAPPY.display(location.add(v), visibleRange, 0, 0, 0, 0, 3);
+            ParticleEffect.VILLAGER_HAPPY.display(0, 0, 0, 0, 3, location.add(v), visibleRange);
             location.subtract(v);
         }
         for (Vector v : cacheBlue) {
-            ParticleEffect.DRIP_WATER.display(location.add(v), visibleRange, 0, 0, 0, 0, 1);
+            ParticleEffect.DRIP_WATER.display(0, 0, 0, 0, 1, location.add(v), visibleRange);
             location.subtract(v);
         }
     }

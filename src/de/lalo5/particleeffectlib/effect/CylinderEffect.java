@@ -7,9 +7,10 @@ import de.lalo5.particleeffectlib.util.MathUtils;
 import de.lalo5.particleeffectlib.util.ParticleEffect;
 import de.lalo5.particleeffectlib.util.RandomUtils;
 import de.lalo5.particleeffectlib.util.VectorUtils;
-import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+
+import java.util.Random;
 
 public class CylinderEffect extends Effect {
 
@@ -114,7 +115,7 @@ public class CylinderEffect extends Effect {
             if (enableRotation) {
                 VectorUtils.rotateVector(v, xRotation, yRotation, zRotation);
             }
-            particle.display(location.add(v), visibleRange);
+            particle.display(0, 0, 0, speed, 1, location.add(v), visibleRange);
             location.subtract(v);
         }
         display(particle, location);
